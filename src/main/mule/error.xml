@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<ee:transform doc:name="Transform Message" doc:id="6b141f14-595a-4761-9d11-b7455993b7b3" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
+output application/json
 ---
 {
 	"a":10,
@@ -25,6 +25,7 @@ output application/java
 		<flow-ref doc:name="Flow Reference" doc:id="9537798f-16fe-4cc2-a0db-3ab5d008ab82" name="errorFlow1"/>
 		<logger level="INFO" doc:name="Logger" doc:id="c07bf9f3-87df-4e36-83f6-60d87e50ed2d" />
 		<flow-ref doc:name="Flow Reference" doc:id="26870b85-65a4-4826-90bc-62a6eb704e67" name="errorSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ac1cca19-f082-4d8c-ac35-6710f6e85bbf" message="end flow"/>
 	</flow>
 	<flow name="errorFlow1" doc:id="2368e9ee-198b-42e0-9f22-9608469571bf" >
 		<logger level="INFO" doc:name="Logger" doc:id="9cc51fa3-09d9-4738-ad2e-46d517135978" />
