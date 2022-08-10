@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="fd824da0-180a-42a2-8d01-eccaf46e447f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="errorFlow" doc:id="4ec7a7a3-32be-4dfa-a72b-11d7c9ec4364" >
+		<http:listener doc:name="Listener" doc:id="c03fd0aa-9716-4aa1-840f-fc3e32f1ab12" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bf178d88-83dc-4001-b251-a1b4d66f2c23" />
+		<ee:transform doc:name="Transform Message" doc:id="6b141f14-595a-4761-9d11-b7455993b7b3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	"a":10,
+	"b":20
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<flow-ref doc:name="Flow Reference" doc:id="9537798f-16fe-4cc2-a0db-3ab5d008ab82" name="errorFlow1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c07bf9f3-87df-4e36-83f6-60d87e50ed2d" />
+		<flow-ref doc:name="Flow Reference" doc:id="26870b85-65a4-4826-90bc-62a6eb704e67" name="errorSub_Flow"/>
+	</flow>
+	<flow name="errorFlow1" doc:id="2368e9ee-198b-42e0-9f22-9608469571bf" >
+		<logger level="INFO" doc:name="Logger" doc:id="9cc51fa3-09d9-4738-ad2e-46d517135978" />
+		<logger level="INFO" doc:name="Logger" doc:id="eb8e69c7-fcb7-4fd2-963b-5ec633be1055" />
+	</flow>
+	<sub-flow name="errorSub_Flow" doc:id="f7dd561e-09c2-4e34-9782-fe76d1a67dce" >
+		<logger level="INFO" doc:name="logger" doc:id="e872d8e4-1bb9-4f52-ae25-e260ef1d185f" />
+	</sub-flow>
+</mule>

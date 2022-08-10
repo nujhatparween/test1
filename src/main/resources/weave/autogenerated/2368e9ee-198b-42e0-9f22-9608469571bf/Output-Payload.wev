@@ -1,0 +1,7 @@
+%dw 2.0
+
+type auto_2368e9ee_198b_42e0_9f22_9608469571bf_Output_Payload = {|
+  a: Number, 
+  b: Number
+|}
+
